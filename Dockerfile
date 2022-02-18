@@ -12,7 +12,7 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 #EXPOSE  7878
 
-COPY P7.py app.py 
+COPY dasboard.py app.py 
 COPY . .
 
 #CMD [ "python3", "-m" , "flask", "run", "--host=51.158.147.66", "--port=7878"]
