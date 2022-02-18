@@ -185,7 +185,7 @@ def main() :
     #Appel de l'API : 
     #API_url = "http://127.0.0.1:5000/credit/" + str(chk_id)
     #API_url = "https://api-prediction-credit.herokuapp.com/credit/" + str(chk_id)
-    API_url = "https://heroku-credit-app.herokuapp.com//credit/" + str(chk_id)
+    API_url = "https://app-birro.herokuapp.com/credit/" + str(chk_id)
    
     
 
