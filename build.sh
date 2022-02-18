@@ -1,1 +1,1 @@
- sudo docker build --tag p7-streamlit .
+ sudo docker build --tag dasboard-streamlit .
