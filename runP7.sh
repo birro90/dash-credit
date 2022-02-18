@@ -1,1 +1,1 @@
-streamlit run P7.py
+streamlit run dasboard.py
