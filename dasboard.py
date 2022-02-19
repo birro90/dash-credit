@@ -310,7 +310,7 @@ def main() :
             X.reset_index().drop('SK_ID_CURR', axis=1)
                             
             lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
-            exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba)
+            exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=5)
             html = exp.as_html()
             components.html(html, height=800, width=800)#, height=1000, width=1000
         
