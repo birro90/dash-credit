@@ -298,7 +298,7 @@ def main() :
         shap.initjs()
         X = sample.iloc[:, :]
         X = X[X.index == chk_id]
-        number = st.slider("Pick a number of features…", 0, 25, 5)
+        #number = st.slider("Pick a number of features…", 0, 25, 5)
 
         #fig, ax = plt.subplots(figsize=(10, 10))
         #explainer = shap.TreeExplainer(load_model())
@@ -312,7 +312,7 @@ def main() :
             lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
             exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba)
             html = exp.as_html()
-            components.html(html, height=800, width=700)#, height=1000, width=1000
+            components.html(html, height=800, width=800)#, height=1000, width=1000
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
