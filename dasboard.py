@@ -227,7 +227,7 @@ def main() :
                        
         infos_client = identite_client(data, chk_id)
         st.write("**Customer Gender : **", infos_client["CODE_GENDER"].values[0])
-        st.write("**Customer Age : **{:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1)))
+        st.write("**Customer Age : **{:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
         st.write("**Customer Own Car ? : **", infos_client["FLAG_OWN_CAR"].values[0])
         st.write("**Customer Work Phone ? : **", infos_client["FLAG_WORK_PHONE"].values[0])
         
