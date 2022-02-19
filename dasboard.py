@@ -236,7 +236,7 @@ def main() :
         data_age = load_age_population(data)
         fig, ax = plt.subplots(figsize=(10, 5))
         sns.histplot(data_age, edgecolor = 'k', color="gray", bins=10)
-        ax.axvline(int((infos_client["DAYS_BIRTH"].values / 365)*(-1), color="green", linestyle='--')
+        ax.axvline(int((infos_client["DAYS_BIRTH"].values / 365)*(-1)), color="green", linestyle='--')
         ax.set(title='Customer age', xlabel='Age(Year)', ylabel='')
         st.pyplot(fig)
     
@@ -256,7 +256,7 @@ def main() :
         
         #Relationship Age / Payment Rate interactive plot 
         data_sk = data.reset_index(drop=False)
-        data_sk.DAYS_BIRTH = ((data_sk['DAYS_BIRTH']/365)*(-1).round(1)
+        data_sk.DAYS_BIRTH = ((data_sk['DAYS_BIRTH']/365)*(-1)).round(1)
         fig, ax = plt.subplots(figsize=(10, 10))
         fig = px.scatter(data_sk, x='DAYS_BIRTH', y="PAYMENT_RATE", 
                          size="PAYMENT_RATE", color='CODE_GENDER') # ,
