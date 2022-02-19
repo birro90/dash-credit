@@ -35,9 +35,7 @@ def main() :
 
     def load_model():
         '''loading the trained model'''
-        #path = "C:/Users/birro/Documents/projet_openclassrooms/"
-        clf = load("best_rf_model.joblib")
-       
+        clf = load("best_log_model.joblib")
         return clf
 
 
@@ -64,7 +62,6 @@ def main() :
 
 
     def identite_client(data, id):
-                       
         data_client = data.loc[[id]]
         data_client['CODE_GENDER'] = data_client['CODE_GENDER'].map({0: 'Male', 1: 'Female'})
         data_client['FLAG_OWN_CAR'] = data_client['FLAG_OWN_CAR'].map({0: 'Yes', 1: 'No'})
@@ -187,7 +184,6 @@ def main() :
     
     #Appel de l'API : 
     #API_url = "http://127.0.0.1:5000/credit/" + str(chk_id)
-    #API_url = "https://api-prediction-credit.herokuapp.com/credit/" + str(chk_id)
     API_url = "https://app-birro.herokuapp.com/credit/" + str(chk_id)
    
     
@@ -198,7 +194,7 @@ def main() :
         prediction = API_data['client risk in %']
     
     ## credit decision limit
-    if prediction <= 50:
+    if prediction >= 50:
         color = "red"
         message = "Credit rejected"
     else:
