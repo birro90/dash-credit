@@ -297,7 +297,7 @@ def main() :
     if st.checkbox("Features importance customer {:.0f} ".format(chk_id)):
         shap.initjs()
         X = sample.iloc[:, :]
-        X = X[X.index == chk_id]
+        #X = X[X.index == chk_id]
         #number = st.slider("Pick a number of features…", 0, 25, 5)
 
         #fig, ax = plt.subplots(figsize=(10, 10))
@@ -305,12 +305,20 @@ def main() :
         #shap_values = explainer.shap_values(X)
         #shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         #st.pyplot(fig)
+        
+        # compute SHAP values
+        explainer = shap.Explainer(load_model(), X)
+        X = X[X.index == chk_id]
+        shap_values = explainer(X)
+        fig, ax = plt.subplots(figsize=(10, 10))
+        shap.plots.waterfall(shap_values[0])
+        st.pyplot(fig)
                
         if st.checkbox("lime value ?"):
             X.reset_index().drop('SK_ID_CURR', axis=1)
                             
             lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
-            exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=7,labels=(0, 1))
+            exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=7)
             html = exp.as_html()
             components.html(html, height=800, width=800)#, height=1000, width=1000
         
