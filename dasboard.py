@@ -308,7 +308,8 @@ def main() :
         X.reset_index().drop('SK_ID_CURR', axis=1)
         fig, ax = plt.subplots(figsize=(10, 10))
         shap_explainer = shap.Explainer(load_model(), masker=X, feature_names=X.columns)
-        shap.plots.waterfall(shap_explainer(X)[0])
+        #shap.plots.waterfall(shap_explainer(X)[0])
+        shap.plots.waterfall(shap_explainer(X.iloc[0]))
         st.pyplot(fig)
         
         if st.checkbox("lime value ?"):
