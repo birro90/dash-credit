@@ -178,10 +178,6 @@ def main() :
     st.header("**Credit Decision**")
     
     # Deployement prediction  :
-    #prediction = load_prediction(sample, chk_id, clf)
-    #st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
-    # Local pridiction :
-    
     #Appel de l'API : 
     #API_url = "http://127.0.0.1:5000/credit/" + str(chk_id)
     API_url = "https://app-birro.herokuapp.com/credit/" + str(chk_id)
@@ -211,8 +207,8 @@ def main() :
         delta = {'reference': 100},
         gauge = {'axis': {'range': [None, 100]},
              'steps' : [
-                 {'range': [0, 50], 'color': "red"},
-                 {'range': [50, 100], 'color': "green"}],
+                 {'range': [0, 50], 'color': "green"},
+                 {'range': [50, 100], 'color': "red"}],
              'bar': {'color': "gray"},
              'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 1, 'value': 50}}))
 
