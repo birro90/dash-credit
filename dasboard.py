@@ -190,6 +190,7 @@ def main() :
         prediction = API_data['client risk in %']
     
     ## credit decision limit
+    #253159
     if prediction >= 50:
         color = "red"
         message = "Credit rejected"
