@@ -35,7 +35,7 @@ def main() :
 
     def load_model():
         '''loading the trained model'''
-        clf = load("best_model_log.joblib")
+        clf = load("best_model_lgbm.joblib")
         return clf
 
 
