@@ -35,7 +35,7 @@ def main() :
 
     def load_model():
         '''loading the trained model'''
-        clf = load("best_log_model.joblib")
+        clf = load("best_model_log.joblib")
         return clf
 
 
@@ -287,7 +287,7 @@ def main() :
     if st.checkbox("Features importance global"):
         
         imageLocation = st.empty()
-        img_color = Image.open("shap value.png")
+        img_color = Image.open("shap_value.png")
         imageLocation.image(img_color)
              
     else:
