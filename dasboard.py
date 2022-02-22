@@ -24,8 +24,8 @@ def main() :
     @st.cache
     def load_data():
         #path = "C:/Users/birro/Documents/projet_openclassrooms/"
-        data = pd.read_csv('data_selectM.csv', index_col='SK_ID_CURR', encoding ='utf-8')
-        sample = pd.read_csv('X_test_sampleM.csv', index_col='SK_ID_CURR', encoding ='utf-8')
+        data = pd.read_csv('data_selectMille.csv', index_col='SK_ID_CURR', encoding ='utf-8')
+        sample = pd.read_csv('X_test_sample700.csv', index_col='SK_ID_CURR', encoding ='utf-8')
         description = pd.read_csv("features_description.csv", usecols=['Row', 'Description'],  index_col=0, encoding= 'unicode_escape')#, encoding= 'unicode_escape'
 
         target = data.iloc[:, 0:]
