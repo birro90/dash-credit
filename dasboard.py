@@ -221,14 +221,9 @@ def main() :
         ax.set(title='Customer payment rate', xlabel='Payment Rate', ylabel='')
         st.pyplot(fig)
         
-        st.subheader("*Annuity on income*")
-        st.write("Annuity / Income: {:.0f} {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
-        data_income = load_income_population(data)
-        fig, ax = plt.subplots(figsize=(10, 5))
-        sns.histplot(data_income["ANNUITY_INCOME_PERC"]*100, edgecolor = 'k', color="gray", bins=10)
-        ax.axvline(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, color="green", linestyle='--')
-        ax.set(title='Customer annuity on income', xlabel='Annuity/Income', ylabel='')
-        st.pyplot(fig)
+        #st.subheader("*Annuity on income*")
+        #st.write("Annuity / Income: {:.0f} {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
+        
         
         st.subheader("*Relationship Age / Payment Rate*")
         #Relationship Age / Payment Rate interactive plot 
