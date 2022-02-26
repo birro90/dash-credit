@@ -251,13 +251,16 @@ def main() :
     st.markdown("---")
     #Customer solvability display
     st.header("**Customer analysis**")
+    imageLocation = st.empty()
+    img_color = Image.open("shap_value.png")
+    imageLocation.image(img_color)
 
-    if st.checkbox("Features importance global"):        
-        imageLocation = st.empty()
-        img_color = Image.open("shap_value.png")
-        imageLocation.image(img_color)             
-    else:
-        st.markdown("<i>…</i>", unsafe_allow_html=True)
+    #if st.checkbox("Features importance global"):        
+     #   imageLocation = st.empty()
+      #  img_color = Image.open("shap_value.png")
+       # imageLocation.image(img_color)             
+    #else:
+     #   st.markdown("<i>…</i>", unsafe_allow_html=True)
 
     #Feature importance / description
     clf = load("best_model_log.joblib")
