@@ -214,8 +214,8 @@ def main() :
     
         
         st.subheader("*Annuity on income and Payment rate*")
-        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0], 5)))
-        st.write("Annuity / Income: {:.0f} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0], 5)))
+        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2)))
+        st.write("Annuity / Income: {:.0f} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2)))
         #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
         #st.write("**Annuity / Income : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
 
@@ -272,8 +272,6 @@ def main() :
      
         # compute SHAP values
         with st.expander("Explication graph"):
-            st.info("""*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent 
-             des probabilités inférieures à 0,5 que le client soit en defaut de paiement.""")
              st.write("""*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent 
              des probabilités inférieures à 0,5 que le client soit en defaut de paiement.""")
              st.write("""*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.""")
