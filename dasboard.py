@@ -106,7 +106,7 @@ def main() :
     #Loading data……
     data, sample, target, description = load_data()
     id_client = sample.index.values
-    clf = = load("best_model_log.joblib")
+    clf = load("best_model_log.joblib")
 
 
     #######################################
@@ -196,20 +196,20 @@ def main() :
         message = "Credit rejected"
     else:
         color = "green"
-        message = "Credit granted"
-        
+        message = "Credit granted"  
     # gauge
     fig = go.Figure(go.Indicator(
         domain = {'x': [0, 1], 'y': [0, 1]},
         value = prediction,
         mode = "gauge+number",
-        
+     
         title = {'text': message},
         delta = {'reference': 100},
         gauge = {'axis': {'range': [None, 100]},
              'steps' : [
                  {'range': [0, 50], 'color': "green"},
                  {'range': [50, 100], 'color': "red"}],
+                 
              'bar': {'color': "gray"},
              'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 1, 'value': 50}}))
 
