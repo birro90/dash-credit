@@ -197,10 +197,10 @@ def main() :
     if st.checkbox("Show customer information ?"):
                        
         infos_client = identite_client(data, chk_id)
-        st.write("<u>Customer Gender : </u>", infos_client["CODE_GENDER"].values[0])
-        st.write("**Customer Age : **{:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
-        #st.write("**Customer Own Car ? : **", infos_client["FLAG_OWN_CAR"].values[0])
-        #st.write("**Annuity Income  ? : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
+        st.write("Customer Gender : ", infos_client["CODE_GENDER"].values[0])
+        st.write("Customer Age : {:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
+        #st.write("Customer Own Car ? : ", infos_client["FLAG_OWN_CAR"].values[0])
+        #st.write("Annuity Income  ? : ", infos_client["ANNUITY_INCOME_PERC"].values[0])
         #Number of loans in the sample
                 
 
@@ -214,7 +214,8 @@ def main() :
     
         
         st.subheader("*Annuity rate*")
-        st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
+        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0], 2)))
+        #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
         st.write("**Credit annuities / Income: **", infos_client["ANNUITY_INCOME_PERC"].values[0])
 
         
