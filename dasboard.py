@@ -16,16 +16,16 @@ from joblib import load
 from PIL import Image
 import plotly.graph_objects as go
 plt.style.use('fivethirtyeight')
-sns.set_style('darkgrid')
+#sns.set_style('darkgrid')
 st.set_page_config(layout="wide",page_title="credit_scoring"),
 
 def main() :
+    
     @st.cache
     def load_data():
-        #path = "C:/Users/birro/Documents/projet_openclassrooms/"
         data = pd.read_csv('data_selectMille.csv', index_col='SK_ID_CURR', encoding ='utf-8')
         sample = pd.read_csv('X_test_sample700.csv', index_col='SK_ID_CURR', encoding ='utf-8')
-        description = pd.read_csv("features_description.csv", usecols=['Row', 'Description'],  index_col=0, encoding= 'unicode_escape')#, encoding= 'unicode_escape'
+        description = pd.read_csv("features_description.csv", usecols=['Row', 'Description'],  index_col=0, encoding= 'unicode_escape')
         target = data.iloc[:, 0:]
         return data, sample, target, description
 
@@ -60,19 +60,19 @@ def main() :
         data_client['FLAG_OWN_CAR'] = data_client['FLAG_OWN_CAR'].map({0: 'Yes', 1: 'No'})
         data_client['FLAG_PHONE'] = data_client['FLAG_PHONE'].map({0: 'Yes', 1: 'No'})
         data_client['FLAG_WORK_PHONE'] = data_client['FLAG_WORK_PHONE'].map({0: 'Yes', 1: 'No'})
+        data_client['FLAG_OWN_REALTY'] = data_client['FLAG_OWN_REALTY'].map({0: 'Yes', 1: 'No'})
         return data_client
 
     @st.cache
     def load_age_population(data):
-        data_age = round((data["DAYS_BIRTH"]/365), 2)
+        data_age = round(((data["DAYS_BIRTH"]/365)*(-1)), 2)
         return data_age
 
     @st.cache
     def load_income_population(sample):
         df_income = pd.DataFrame(sample["PAYMENT_RATE"])
-        df_income = df_income.loc[df_income['PAYMENT_RATE'] < 10000, :]
+        #df_income = df_income.loc[df_income['PAYMENT_RATE'] < 10000, :]
         return df_income
-    
     
 
     @st.cache
@@ -201,14 +201,14 @@ def main() :
         st.write("**Customer Gender : **", infos_client["CODE_GENDER"].values[0])
         st.write("**Customer Age : **{:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
         st.write("**Customer Own Car ? : **", infos_client["FLAG_OWN_CAR"].values[0])
-        st.write("**Customer Work Phone ? : **", infos_client["FLAG_WORK_PHONE"].values[0])
+        st.write("**Annuity Income  ? : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
         
 
         #Age distribution plot
         data_age = load_age_population(data)
         fig, ax = plt.subplots(figsize=(10, 5))
         sns.histplot(data_age, edgecolor = 'k', color="gray", bins=10)
-        ax.axvline(int((infos_client["DAYS_BIRTH"].values / 365)*(-1)), color="green", linestyle='--')
+        ax.axvline(int((infos_client["DAYS_BIRTH"].values / 365)), color="green", linestyle='--')
         ax.set(title='Customer age', xlabel='Age(Year)', ylabel='')
         st.pyplot(fig)
     
