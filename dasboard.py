@@ -197,14 +197,12 @@ def main() :
     if st.checkbox("Show customer information ?"):
                        
         infos_client = identite_client(data, chk_id)
-        st.write("**Customer Gender : **", infos_client["CODE_GENDER"].values[0])
+        st.write("<u>Customer Gender : </u>", infos_client["CODE_GENDER"].values[0])
         st.write("**Customer Age : **{:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
         #st.write("**Customer Own Car ? : **", infos_client["FLAG_OWN_CAR"].values[0])
         #st.write("**Annuity Income  ? : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
         #Number of loans in the sample
-        st.sidebar.markdown("<u>**Customer Gender :**</u>", unsafe_allow_html=True)
-        st.sidebar.text(infos_client["CODE_GENDER"].values[0])
-        
+                
 
         #Age distribution plot
         data_age = load_age_population(data)
