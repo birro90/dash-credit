@@ -242,8 +242,7 @@ def main() :
                          title="Age", title_font=dict(size=18, family='Verdana'))
         fig.update_yaxes(showline=True, linewidth=2, linecolor='#f0f0f0', gridcolor='#cbcbcb',
                          title="Payment Rate", title_font=dict(size=18, family='Verdana'))
-        #st.plotly_chart(fig)
-        st.pyplot(fig)
+        st.plotly_chart(fig)
     
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
