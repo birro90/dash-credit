@@ -153,7 +153,7 @@ def main() :
     #Display Customer ID from Sidebar
     st.write("Customer ID selection :", chk_id)
         
-    st.header("<u>**Credit Decision**</u>")
+    st.header("**Credit Decision**")
     
     # Deployement prediction  :
     #Appel de l'API : 
