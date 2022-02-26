@@ -35,8 +35,8 @@ def main() :
 
     def load_model():
         '''loading the trained model'''
-        clf = load("best_model_lgbm.joblib")
-        return clf
+        model_load = load("best_model_lgbm.joblib")
+        return model_load
 
 
     @st.cache(allow_output_mutation=True)
@@ -106,7 +106,7 @@ def main() :
     #Loading data……
     data, sample, target, description = load_data()
     id_client = sample.index.values
-    #clf = load_model()
+    clf = = load("best_model_log.joblib")
 
 
     #######################################
@@ -298,7 +298,7 @@ def main() :
         #number = st.slider("Pick a number of features…", 0, 25, 5)
 
         #fig, ax = plt.subplots(figsize=(10, 10))
-        #explainer = shap.TreeExplainer(load_model())
+        #explainer = shap.TreeExplainer(clf)
         #shap_values = explainer.shap_values(X)
         #shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
         #st.pyplot(fig)
@@ -313,20 +313,20 @@ def main() :
         #st.text("*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent des probabilités inférieures à 0,5 que le client soit en defaut de paiement")
         #st.text("*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.")
         #st.text("*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement")
-        explainer = shap.Explainer(load_model(), X)
+        explainer = shap.Explainer(clf, X)
         X = X[X.index == chk_id]
         shap_values = explainer(X)
         fig, ax = plt.subplots(figsize=(10, 10))
         shap.plots.waterfall(shap_values[0])
         st.pyplot(fig)
         
-        if st.checkbox("lime value ?"):
-            X.reset_index().drop('SK_ID_CURR', axis=1)
+        #if st.checkbox("lime value ?"):
+        #    X.reset_index().drop('SK_ID_CURR', axis=1)
                             
-            lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
-            exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=7)
-            html = exp.as_html()
-            components.html(html, height=800, width=800)#, height=1000, width=1000
+        #    lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
+        #    exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=7)
+        #    html = exp.as_html()
+        #    components.html(html, height=800, width=800)#, height=1000, width=1000
         
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
