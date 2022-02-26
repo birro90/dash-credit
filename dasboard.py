@@ -214,8 +214,8 @@ def main() :
     
         
         st.subheader("*Annuity on income and Payment rate*")
-        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2)))
-        st.write("Annuity / Income: {:.0f} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2)))
+        st.write("Payment rate : {:.0f}, {} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2), "%"))
+        st.write("Annuity / Income: {:.0f}, {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
         #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
         #st.write("**Annuity / Income : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
 
@@ -223,8 +223,8 @@ def main() :
         #Income distribution plot
         data_income = load_income_population(data)
         fig, ax = plt.subplots(figsize=(10, 5))
-        sns.histplot(data_income["PAYMENT_RATE"], edgecolor = 'k', color="gray", bins=10)
-        ax.axvline(infos_client["PAYMENT_RATE"].values[0], color="green", linestyle='--')
+        sns.histplot(data_income["PAYMENT_RATE"]*100, edgecolor = 'k', color="gray", bins=10)
+        ax.axvline(infos_client["PAYMENT_RATE"].values[0]*100, color="green", linestyle='--')
         ax.set(title='Customer payment rate', xlabel='Payment Rate', ylabel='')
         st.pyplot(fig)
         
