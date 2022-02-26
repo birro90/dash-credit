@@ -199,10 +199,7 @@ def main() :
         infos_client = identite_client(data, chk_id)
         st.write("Customer Gender : ", infos_client["CODE_GENDER"].values[0])
         st.write("Customer Age : {:.0f} ans".format(int((infos_client["DAYS_BIRTH"]/365)*(-1))))
-        #st.write("Customer Own Car ? : ", infos_client["FLAG_OWN_CAR"].values[0])
-        #st.write("Annuity Income  ? : ", infos_client["ANNUITY_INCOME_PERC"].values[0])
-        #Number of loans in the sample
-                
+                 
 
         #Age distribution plot
         data_age = load_age_population(data)
@@ -213,13 +210,9 @@ def main() :
         st.pyplot(fig)
     
         
-        st.subheader("*Annuity on income and Payment rate*")
+        st.subheader("*Payment rate*")
         st.write("Payment rate : {:.0f} {} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2), "%"))
-        st.write("Annuity / Income: {:.0f} {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
-        #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
-        #st.write("**Annuity / Income : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
-
-        
+               
         #Income distribution plot
         data_income = load_income_population(data)
         fig, ax = plt.subplots(figsize=(10, 5))
@@ -228,26 +221,34 @@ def main() :
         ax.set(title='Customer payment rate', xlabel='Payment Rate', ylabel='')
         st.pyplot(fig)
         
+        st.subheader("*Annuity on income*")
+        st.write("Annuity / Income: {:.0f} {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
+        data_income = load_income_population(data)
+        fig, ax = plt.subplots(figsize=(10, 5))
+        sns.histplot(data_income["ANNUITY_INCOME_PERC"]*100, edgecolor = 'k', color="gray", bins=10)
+        ax.axvline(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, color="green", linestyle='--')
+        ax.set(title='Customer annuity on income', xlabel='Annuity/Income', ylabel='')
+        st.pyplot(fig)
+        
+        st.subheader("*Relationship Age / Payment Rate*")
         #Relationship Age / Payment Rate interactive plot 
         data_sk = data.reset_index(drop=False)
         data_sk.DAYS_BIRTH = ((data_sk['DAYS_BIRTH']/365)*(-1)).round(1)
         data_sk.PAYMENT_RATE = (data_sk['PAYMENT_RATE']*100).round(1)
-        fig, ax = plt.subplots(figsize=(10, 10))
+        fig, ax = plt.subplots(figsize=(10, 5))
         fig = px.scatter(data_sk, x='DAYS_BIRTH', y="PAYMENT_RATE", 
                          size="PAYMENT_RATE", color='CODE_GENDER') # ,
-
         fig.update_layout({'plot_bgcolor':'#f0f0f0'}, 
                           title={'text':"Relationship Age / Payment Rate", 'x':0.5, 'xanchor': 'center'}, 
                           title_font=dict(size=18, family='Verdana'), legend=dict(y=1.1, orientation='h'))
-
 
         fig.update_traces(marker=dict(line=dict(width=0.5, color='#3a352a')), selector=dict(mode='markers'))
         fig.update_xaxes(showline=True, linewidth=2, linecolor='#f0f0f0', gridcolor='#cbcbcb',
                          title="Age", title_font=dict(size=18, family='Verdana'))
         fig.update_yaxes(showline=True, linewidth=2, linecolor='#f0f0f0', gridcolor='#cbcbcb',
                          title="Payment Rate", title_font=dict(size=18, family='Verdana'))
-
-        st.plotly_chart(fig)
+        #st.plotly_chart(fig)
+        st.pyplot(fig)
     
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
