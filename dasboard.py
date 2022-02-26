@@ -213,10 +213,11 @@ def main() :
         st.pyplot(fig)
     
         
-        st.subheader("*Annuity rate*")
-        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0], 2)))
+        st.subheader("*Annuity on income and Payment rate*")
+        st.write("Payment rate : {:.0f} ".format(round(infos_client["PAYMENT_RATE"].values[0], 5)))
+        st.write("Annuity / Income: {:.0f} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0], 5)))
         #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
-        st.write("**Credit annuities / Income: **", infos_client["ANNUITY_INCOME_PERC"].values[0])
+        #st.write("**Annuity / Income : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
 
         
         #Income distribution plot
