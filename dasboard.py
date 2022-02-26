@@ -65,7 +65,7 @@ def main() :
 
     @st.cache
     def load_age_population(data):
-        data_age = round(((data["DAYS_BIRTH"]/365)*(-1)), 2)
+        data_age = round((data["DAYS_BIRTH"]/365)*(-1), 2)
         return data_age
 
     @st.cache
