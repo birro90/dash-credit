@@ -251,6 +251,7 @@ def main() :
     st.markdown("---")
     #Customer solvability display
     st.header("**Customer analysis**")
+    st.subheader("*Shap Value*")
     imageLocation = st.empty()
     img_color = Image.open("shap_value.png")
     imageLocation.image(img_color)
