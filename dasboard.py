@@ -304,9 +304,15 @@ def main() :
         #st.pyplot(fig)
         
         # compute SHAP values
-        st.text("*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent des probabilités inférieures à 0,5 que le client soit en defaut de paiement")
-        st.text("*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.")
-        st.text("*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement")
+        with st.expander("Explication graph"):
+             st.write("""*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent 
+             des probabilités inférieures à 0,5 que le client soit en defaut de paiement.""")
+             st.write("""*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.""")
+             st.write("""*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement.""")
+                
+        #st.text("*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent des probabilités inférieures à 0,5 que le client soit en defaut de paiement")
+        #st.text("*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.")
+        #st.text("*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement")
         explainer = shap.Explainer(load_model(), X)
         X = X[X.index == chk_id]
         shap_values = explainer(X)
