@@ -214,8 +214,8 @@ def main() :
     
         
         st.subheader("*Annuity on income and Payment rate*")
-        st.write("Payment rate : {:.0f}, {} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2), "%"))
-        st.write("Annuity / Income: {:.0f}, {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
+        st.write("Payment rate : {:.0f} {} ".format(round(infos_client["PAYMENT_RATE"].values[0]*100, 2), "%"))
+        st.write("Annuity / Income: {:.0f} {} ".format(round(infos_client["ANNUITY_INCOME_PERC"].values[0]*100, 2),"%"))
         #st.write("**Payment rate: **", infos_client["PAYMENT_RATE"].values[0])
         #st.write("**Annuity / Income : **", infos_client["ANNUITY_INCOME_PERC"].values[0])
 
@@ -231,6 +231,7 @@ def main() :
         #Relationship Age / Payment Rate interactive plot 
         data_sk = data.reset_index(drop=False)
         data_sk.DAYS_BIRTH = ((data_sk['DAYS_BIRTH']/365)*(-1)).round(1)
+        data_sk.PAYMENT_RATE = (data_sk['PAYMENT_RATE']*100).round(1)
         fig, ax = plt.subplots(figsize=(10, 10))
         fig = px.scatter(data_sk, x='DAYS_BIRTH', y="PAYMENT_RATE", 
                          size="PAYMENT_RATE", color='CODE_GENDER') # ,
