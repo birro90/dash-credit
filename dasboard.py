@@ -153,7 +153,7 @@ def main() :
     #Display Customer ID from Sidebar
     st.write("Customer ID selection :", chk_id)
         
-    st.header("**Credit Decision**")
+    st.header("<u>**Credit Decision**</u>")
     
     # Deployement prediction  :
     #Appel de l'API : 
@@ -190,7 +190,7 @@ def main() :
     fig.update_layout(font = {'color': color, 'family': "Arial"})
     st.plotly_chart(fig, use_container_width=True, sharing="streamlit")
 
-
+    st.markdown("---")
     #Customer information display : Customer Gender, Age …
     st.header("**Customer information**")
 
@@ -248,9 +248,8 @@ def main() :
         st.markdown("<i>…</i>", unsafe_allow_html=True)
         
     
-
+    st.markdown("---")
     #Customer solvability display
-
     st.header("**Customer analysis**")
 
     if st.checkbox("Features importance global"):        
