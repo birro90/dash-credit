@@ -20,16 +20,13 @@ sns.set_style('darkgrid')
 st.set_page_config(layout="wide",page_title="credit_scoring"),
 
 def main() :
-
     @st.cache
     def load_data():
         #path = "C:/Users/birro/Documents/projet_openclassrooms/"
         data = pd.read_csv('data_selectMille.csv', index_col='SK_ID_CURR', encoding ='utf-8')
         sample = pd.read_csv('X_test_sample700.csv', index_col='SK_ID_CURR', encoding ='utf-8')
         description = pd.read_csv("features_description.csv", usecols=['Row', 'Description'],  index_col=0, encoding= 'unicode_escape')#, encoding= 'unicode_escape'
-
         target = data.iloc[:, 0:]
-
         return data, sample, target, description
 
 
@@ -46,18 +43,14 @@ def main() :
 
 
     @st.cache
-    def load_infos_gen(data):
-        
+    def load_infos_gen(data):      
         lst_infos = [data.shape[0],
                      round((data["ANNUITY_INCOME_PERC"].mean())*100, 2),
                      round((data["PAYMENT_RATE"].mean())*100, 2)]
-    
         nb_credits = lst_infos[0]
         income_annuity_moy_rate = lst_infos[1]
         payment_moy_rate = lst_infos[2]
-
         targets = data.TARGET.value_counts()
-
         return nb_credits, income_annuity_moy_rate, payment_moy_rate, targets
 
 
@@ -102,7 +95,6 @@ def main() :
         knn = KMeans(n_clusters=2).fit(sample)
         return knn 
     
-    
     #Loading data……
     data, sample, target, description = load_data()
     id_client = sample.index.values
@@ -114,8 +106,6 @@ def main() :
     #######################################
 
     #Title display
-    
-        
     
     html_temp = """
     <div style="background-color: silver; padding:10px; border-radius:12px">
@@ -130,17 +120,11 @@ def main() :
 
     #Customer ID selection
     st.sidebar.header("**Customer General Info**")
-    #st.sidebar.text("**General Info**")
-    
-    #st.info('This is a purely informational message')
-    
     
     #Loading selectbox
     chk_id = st.sidebar.selectbox("Client ID", id_client)
 
     #Loading general info
-    #nb_credits, rev_moy, credits_moy, targets = load_infos_gen(data)
-    
     nb_credits, income_annuity_moy_rate, payment_moy_rate, targets = load_infos_gen(data)
 
 
@@ -157,13 +141,8 @@ def main() :
     st.sidebar.markdown("<u>Average Payment Rate % :</u>", unsafe_allow_html=True)
     st.sidebar.text(payment_moy_rate)
     
-    #PieChart
-    #st.sidebar.markdown("<u>......</u>", unsafe_allow_html=True)
-    
-    
-    
+    # Count plot
     fig, ax = plt.subplots(figsize=(5,5))
-    #plt.pie(targets, explode=[0, 0.1], labels=['No default', 'Default'], autopct='%1.1f%%', startangle=90)
     sns.countplot(x=data['TARGET'])#, order=['No default', 'Default']
     st.sidebar.pyplot(fig)
         
@@ -182,8 +161,6 @@ def main() :
     #API_url = "http://127.0.0.1:5000/credit/" + str(chk_id)
     API_url = "https://app-birro.herokuapp.com/credit/" + str(chk_id)
    
-    
-
     with st.spinner('Chargement du score du client...'):
         json_url = urlopen(API_url)
         API_data = json.loads(json_url.read())
@@ -202,14 +179,12 @@ def main() :
         domain = {'x': [0, 1], 'y': [0, 1]},
         value = prediction,
         mode = "gauge+number",
-     
         title = {'text': message},
         delta = {'reference': 100},
         gauge = {'axis': {'range': [None, 100]},
              'steps' : [
                  {'range': [0, 50], 'color': "green"},
                  {'range': [50, 100], 'color': "red"}],
-                 
              'bar': {'color': "gray"},
              'threshold' : {'line': {'color': "black", 'width': 4}, 'thickness': 1, 'value': 50}}))
 
@@ -280,13 +255,10 @@ def main() :
 
     st.header("**Customer analysis**")
 
-    
-    if st.checkbox("Features importance global"):
-        
+    if st.checkbox("Features importance global"):        
         imageLocation = st.empty()
         img_color = Image.open("shap_value.png")
-        imageLocation.image(img_color)
-             
+        imageLocation.image(img_color)             
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
 
@@ -294,40 +266,20 @@ def main() :
     if st.checkbox("Features importance customer {:.0f} ".format(chk_id)):
         shap.initjs()
         X = sample.iloc[:, :]
-        #X = X[X.index == chk_id]
-        #number = st.slider("Pick a number of features…", 0, 25, 5)
-
-        #fig, ax = plt.subplots(figsize=(10, 10))
-        #explainer = shap.TreeExplainer(clf)
-        #shap_values = explainer.shap_values(X)
-        #shap.summary_plot(shap_values[0], X, plot_type ="bar", max_display=number, color_bar=False, plot_size=(5, 5))
-        #st.pyplot(fig)
-        
+     
         # compute SHAP values
         with st.expander("Explication graph"):
              st.write("""*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent 
              des probabilités inférieures à 0,5 que le client soit en defaut de paiement.""")
              st.write("""*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.""")
              st.write("""*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement.""")
-                
-        #st.text("*Les unités sur l'axe des x sont des unités de log-odds, donc des valeurs négatives impliquent des probabilités inférieures à 0,5 que le client soit en defaut de paiement")
-        #st.text("*Le texte gris avant les noms des caractéristiques indique la valeur de chaque caractéristique pour cet échantillon.")
-        #st.text("*La couleur bleue pour une variable donnée indique que la valeur de celle-ci diminue la probabilité que le client soit en defaut de paiement")
         explainer = shap.Explainer(clf, X)
         X = X[X.index == chk_id]
         shap_values = explainer(X)
         fig, ax = plt.subplots(figsize=(10, 10))
         shap.plots.waterfall(shap_values[0])
         st.pyplot(fig)
-        
-        #if st.checkbox("lime value ?"):
-        #    X.reset_index().drop('SK_ID_CURR', axis=1)
-                            
-        #    lime_explainer = lime_tabular.LimeTabularExplainer(X.to_numpy(), mode="classification", feature_names=X.columns,verbose=True)
-        #    exp = lime_explainer.explain_instance(data_row=X.iloc[0], predict_fn=load_model().predict_proba, num_features=7)
-        #    html = exp.as_html()
-        #    components.html(html, height=800, width=800)#, height=1000, width=1000
-        
+               
         if st.checkbox("Need help about feature description ?") :
             list_features = description.index.to_list()
             feature = st.selectbox('Feature checklist…', list_features)
@@ -335,12 +287,10 @@ def main() :
         
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
-        
-        
+  
     ###########################################################################"""
     st.markdown("<u>Customer Data :</u>", unsafe_allow_html=True)
     st.write(identite_client(data, chk_id))        
-    
 
     #Similar customer files display
     chk_voisins = st.checkbox("Show similar customer ?")
@@ -353,10 +303,8 @@ def main() :
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
         
-        
     st.markdown('***')
-    #st.markdown("Thanks for going through this Web App with me! I'd love feedback on this, so if you want to reach out you can find Code from [Github](https://github.com/DeepScienceData/Projet-OpenClassRoms)* ❤️")
-
+    st.markdown("If you want to reach out you can find Code from [Github](https://github.com/birro90/dash-credit)")
 
 if __name__ == '__main__':
     main()
